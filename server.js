@@ -34,6 +34,7 @@ app.use(cors({
 
 // Body parsing middleware (must go after CORS)
 app.use(express.json());
+//awesome code 
 // 3. GET Route to Fetch Data
 app.get('/api/users', async (req, res) => {
   try {
