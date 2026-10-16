@@ -20,13 +20,29 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(cors({
-  origin: 'http://localhost:4200',
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
-}));
+import express from 'express';
+import mongoose from 'mongoose';
 
-app.options('*', cors());
+
+
+app.use(express.json());
+
+// Native CORS Middleware - No package import required!
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS,PATCH');
+  res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization');
+
+  // Instantly handle preflight browser options requests
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+  next();
+});
+
+// ... Your MongoDB connection logic and app.get('/api/all') routes go below
+
 const PORT =process.env.PORT || 5000; 
 import EmployeeRoutes from './routes/employee.routes.js';
 app.use('/api',EmployeeRoutes)
