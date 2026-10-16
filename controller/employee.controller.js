@@ -1,6 +1,6 @@
 import Employee from "../models/employee.model.js";
 // create employee controller
-import Employee from "../models/employeeModel.js"; // Adjust the path to your schema file
+// Adjust the path to your schema file
 
 export const createEmployee = async (req, res) => {
   try {
